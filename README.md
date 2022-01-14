@@ -10,9 +10,9 @@
 
 - [Lesson Summary](docs/summary.md)
 
-- [Handout](docs/Handout - Node.js.pdf)
+- [Handout](docs/Handout&#x20;-&#x20;Node.js.pdf)
 
-- [Outline](docs/Outline - Node.js.pdf)
+- [Outline](docs/Outline&#x20;-&#x20;Node.js.pdf)
 
 ### 🤔 Questions?
 
