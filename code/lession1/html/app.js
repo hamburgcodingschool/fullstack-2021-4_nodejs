@@ -6,6 +6,7 @@ const PORT = 3000;
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/dir/page1", (req, res) => {
+  const now = new Date();
   res.send(
     `<html>
     <head>
@@ -14,7 +15,7 @@ app.get("/dir/page1", (req, res) => {
     </head>
     <body>
         <img src="/images/hcs_mid_32x.png" width="100" />
-        <p>Hello! This is page 1</p>
+        <p>Hello! This is page 1 at ${now}</p>
         <p><a href="/static.html">Go to static page</a></p>
         <p><a href="/dir/page2">Go to page 2</a></p>
     </body>
