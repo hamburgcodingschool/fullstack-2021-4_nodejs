@@ -7,11 +7,12 @@
 - Intro to [Express](https://www.npmjs.com/package/express) server
   - Routes
   - Serving HTML content
+- Serving [static files](https://expressjs.com/en/starter/static-files.html) from express server
+  - Path package
+- Hot reloading express server with the [nodemon](https://www.npmjs.com/package/nodemon) package
 
 ## Session 2
 
-- Serving [static files](https://expressjs.com/en/starter/static-files.html) from express server
-  - Path package
 - Forms in HTML
 - Handling form inputs
 - POST requests
