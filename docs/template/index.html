@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>{{title}}</title>
+  {{{style}}}
+  <script src="remark.min.js"></script>
+  <script src="./mermaid.min.js"></script>
+  <link rel="stylesheet" href="./mermaid.css">
+  <script>
+    function create() {
+      var options = {
+        {{{source}}},
+        "ratio": '16:9',
+        "slideNumberFormat": "%current% | %total%",
+        "countIncrementalSlides": false,
+        "highlightLanguage": "java",
+        "highlightStyle": "tomorrow-night-bright",
+        "highlightLines": true,
+        "highlightSpans": false
+      };
+      var renderMermaid = function () {
+        //mermaid.initialize();
+        mermaid.init(undefined, ".mermaid");
+      }
+      return remark.create(options, renderMermaid);
+    };
+  </script>
+</head>
+
+<body onload="slideshow = create()">
+</body>
+
+</html>
