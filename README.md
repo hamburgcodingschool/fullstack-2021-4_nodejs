@@ -4,15 +4,18 @@
 
 ### ✏️ Homework
 
-- Homework will be posted here
+- Write a body mass calculator using forms and calculate the BMI on the server
+- Additions:
+  - Different calculations for male and female - distinguish on the form e.g. with a radio button
+  - Make a nice HTML output page and color code the result (green, yellow, red)
 
 ### 📄 Docs
 
 - [Lesson Summary](docs/summary.md)
 
-- [Handout](docs/Handout&#x20;-&#x20;Node.js.pdf)
+- [Handout](<docs/Handout - Node.js.pdf>)
 
-- [Outline](docs/Outline&#x20;-&#x20;Node.js.pdf)
+- [Outline](<docs/Outline - Node.js.pdf>)
 
 ### 🤔 Questions?
 
