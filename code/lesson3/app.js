@@ -4,12 +4,14 @@ const PORT = 3000;
 const app = express();
 
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.urlencoded({ extended: true })); // !important if using POST requests
+app.use(express.json()); // !important to parse json POST requests
 
-app.get("/calculateGET", (req, res) => {
+app.post("/calculate", (req, res) => {
   console.log("get a get request");
-  const value1 = req.query.value1;
-  const value2 = req.query.value2;
+  console.log(req.body);
+
+  const value1 = req.body.value1;
+  const value2 = req.body.value2;
   const result = parseInt(value1) + parseInt(value2);
 
   // we can just return a json object here!

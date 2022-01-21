@@ -36,7 +36,15 @@
 
         // handling the button click
         button.addEventListener('click', async () => {
-            const result = await fetch(`/calculateGET?value1=${value1.value}&value2=${value2.value}`);
+            const dataToSend = {
+                value1: value1.value,
+                value2: value2.value
+            };
+            const result = await fetch(`/calculate`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(dataToSend)
+            });
             const data = await result.json();
             output.innerHTML = `The result is ${data.result}`;
 
