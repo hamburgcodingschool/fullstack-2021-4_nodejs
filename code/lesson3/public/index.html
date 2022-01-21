@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Calculate</title>
+    </head>
+
+    <body>
+        <h1>Calculator</h1>
+        <p>
+                <label>
+                Value 1
+                <input name="value1" id="value1" type="number" placeholder="a number" />
+            </label>
+        </p>
+
+        <p>
+            <label>
+                Value 2
+                <input name="value2" id="value2" type="number" placeholder="a number" />
+            </label>
+        </p>
+
+        <button id="add">ADD</button>
+
+        <div id="result">no result yet</div>
+
+    </body>
+
+    <script>
+        // getting all elements as variables
+        // make sure, ids are labelled exactly as in the html code above
+        const value1 = document.getElementById("value1");
+        const value2 = document.getElementById("value2");
+        const button = document.getElementById("add");
+        const output = document.getElementById("result");
+
+        // handling the button click
+        button.addEventListener('click', async () => {
+            const result = await fetch(`/calculateGET?value1=${value1.value}&value2=${value2.value}`)
+            const text = await result.text();
+            output.innerHTML = text;
+
+            return false; // stop event from being propagated and a form from being submitted
+        });
+
+    </script>
+</html>
