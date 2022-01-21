@@ -36,9 +36,9 @@
 
         // handling the button click
         button.addEventListener('click', async () => {
-            const result = await fetch(`/calculateGET?value1=${value1.value}&value2=${value2.value}`)
-            const text = await result.text();
-            output.innerHTML = text;
+            const result = await fetch(`/calculateGET?value1=${value1.value}&value2=${value2.value}`);
+            const data = await result.json();
+            output.innerHTML = `The result is ${data.result}`;
 
             return false; // stop event from being propagated and a form from being submitted
         });
