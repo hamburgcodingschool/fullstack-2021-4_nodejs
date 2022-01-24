@@ -46,7 +46,7 @@
                 // in our case: check if (data.ok) . If not, we should return a proper error message
                 // but now we assume everything is ok
                 // make the list of files empty, so that we don't get any duplicates
-                listOfFiles.innerHTML("");
+                listOfFiles.innerHTML = "";
                 // go over the list of files
                 for(let i = 0; i < data.files.length; i++) {
                     const file = data.files[i];
