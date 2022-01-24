@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Editor</title>
+    </head>
+    <body>
+        <h1>Editor</h1>
+
+        <h2>List of files</h2>
+        <ul id="listOfFiles"></ul>
+        <button id="create">Create a new file</button>
+
+        <script>
+            const listOfFiles = document.getElementById("listOfFiles");
+            const createButton = document.getElementById("create");
+
+            // react on the create button
+            createButton.addEventListener("click", async () => {
+                // the file name of the new file we want to create
+                const dataToSend = { newFile: "NewFile"};
+                // make a POST request to the server to create the file (C of CRUD)
+                const result = await fetch(`/createNewFile`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(dataToSend)
+                });
+                // get the answer of the server as JSON - this should contain a file list as well
+                const data = await result.json();
+                // and display the result
+                displayFiles(data);
+            });
+
+            // initial loading of the data
+            async function loadData() {
+                // make a get request and get the file list
+                const result =  await fetch("/filelist");
+                // convert it to json
+                const data = await result.json();
+                // and display it
+                displayFiles(data);
+            }
+            // Display the file list in the li tag
+            // data: the data, which is returned from the server and should contain a `files` array
+            function displayFiles(data) {
+                // Here we actually should do a check, if the data returned is valid
+                // in our case: check if (data.ok) . If not, we should return a proper error message
+                // but now we assume everything is ok
+                // make the list of files empty, so that we don't get any duplicates
+                listOfFiles.innerHTML = "";
+                // go over the list of files
+                for(let i = 0; i < data.files.length; i++) {
+                    const file = data.files[i];
+                    // create a new li dom node with the filename as content
+                    const li = document.createElement("li");
+                    li.innerHTML = file;
+                    // and add it to the list of files
+                    listOfFiles.append(li);
+                }
+            }
+
+            // load data when initializing the page - this method is called after everything else
+            // is loaded
+            loadData();
+        </script>
+    </body>
+</html>

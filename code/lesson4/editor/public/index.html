@@ -19,7 +19,7 @@
                 // the file name of the new file we want to create
                 const dataToSend = { newFile: "NewFile"};
                 // make a POST request to the server to create the file (C of CRUD)
-                const result = await fetch(`/createNewFile`, {
+                const result = await fetch(`/file`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(dataToSend)
@@ -33,7 +33,7 @@
             // initial loading of the data
             async function loadData() {
                 // make a get request and get the file list
-                const result =  await fetch("/filelist");
+                const result =  await fetch("/file");
                 // convert it to json
                 const data = await result.json();
                 // and display it
@@ -52,10 +52,70 @@
                     const file = data.files[i];
                     // create a new li dom node with the filename as content
                     const li = document.createElement("li");
-                    li.innerHTML = file;
+                    // put text in a span document to add some buttons to it as well
+                    const span = document.createElement("span");
+                    span.innerHTML = file;
+                    // create button to rename a file
+                    const renameButton = document.createElement("button");
+                    renameButton.innerHTML = "rename";
+                    // add a click handler to delete the file
+                    renameButton.onclick = function() { 
+                        let newFile = prompt("Enter new filename", file);
+                        if (newFile !== null && newFile !== '') {
+                            renameFile(file, newFile); 
+                        }
+                    }
+                    // button to delete a file
+                    const deleteButton = document.createElement("button");
+                    deleteButton.innerHTML = "delete";
+                    // add a click handler to delete the file
+                    deleteButton.onclick = function() { 
+                        deleteFile(file); 
+                    }
+
+                    // add text and button to the li element
+                    li.append(span);
+                    li.append(renameButton);
+                    li.append(deleteButton);
+
                     // and add it to the list of files
                     listOfFiles.append(li);
                 }
+            }
+
+            // Rename a file
+            // file: the name of the file we want to rename
+            // newFile: the new file name
+            async function renameFile(file, newFile) {
+                // the file name we want to rename plus the new file name - put into a json, so that we can send it to the server
+                const dataToSend = { fileToRename: file, newFileName: newFile};
+                // make a PUT request to the server to rename the file (U of CRUD)
+                const result = await fetch(`/file`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(dataToSend)
+                });
+                // get the answer of the server as JSON - this should contain a file list as well
+                const data = await result.json();
+                // and display the result
+                displayFiles(data);
+            }
+
+            // Delete a file
+            // file: the name of the file we want to delete
+            async function deleteFile(file) {
+                // the file name we want to delete - put into a json, so that we can send it to the server
+                const dataToSend = { fileToDelete: file};
+                // make a DELETE request to the server to delete the file (D of CRUD)
+                const result = await fetch(`/file`, {
+                    method: "DELETE",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(dataToSend)
+                });
+                // get the answer of the server as JSON - this should contain a file list as well
+                const data = await result.json();
+                // and display the result
+                displayFiles(data);
             }
 
             // load data when initializing the page - this method is called after everything else
