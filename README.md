@@ -4,13 +4,15 @@
 
 ### ✏️ Homework
 
-- Write a dice roller
-  - Give the number of sides the dice has
-  - send the data as a json post request {number_of_sides: 12}
-  - compute a random number and return it as json {rolled: 8}
-  - display the result
-  - addition:
-    - animate the result with CSS animations
+- Extend the CRUD example to become an editor
+  - Add a textarea element
+  - If you click on a filename -> Read operation (open textarea)
+  - If you click on a save button -> Update operation
+  - If you click on a trash symbol -> Delete operation
+  - You need `fs.writeFile()` method to write / update the content of the file
+  - Addon:
+    - Give the file a name, when it is created (e.g. via `prompt`)
+    - Add some CSS to make it look nicer (if you want to do your own research, look into `bootstrap`)
 
 ### 📄 Docs
 
