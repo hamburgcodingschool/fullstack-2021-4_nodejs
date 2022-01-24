@@ -4,10 +4,13 @@
 
 ### ✏️ Homework
 
-- Write a body mass calculator using forms and calculate the BMI on the server
-- Additions:
-  - Different calculations for male and female - distinguish on the form e.g. with a radio button
-  - Make a nice HTML output page and color code the result (green, yellow, red)
+- Write a dice roller
+  - Give the number of sides the dice has
+  - send the data as a json post request {number_of_sides: 12}
+  - compute a random number and return it as json {rolled: 8}
+  - display the result
+  - addition:
+    - animate the result with CSS animations
 
 ### 📄 Docs
 
