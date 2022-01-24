@@ -30,7 +30,7 @@ function returnFileList(res) {
 app.post("/createNewFile", (req, res) => {
     // get the filename form the json data
     // req.body contains already the data in json format because of line 8 above
-    const filename = req.body.newFile;
+    const filename = path.join(__dirname, "data", req.body.newFile);
     const content = 'blank';
 
     fs.writeFile(filename, content, (err) => {
