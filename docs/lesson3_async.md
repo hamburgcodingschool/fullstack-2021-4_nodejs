@@ -15,7 +15,7 @@ layout: true
 .bottom-bar[
 {{title}} -- {{subtitle}} -- {{organisation}}
 ]
-.logo[![logo](hcs_mid_32x.png)]
+.logo[![logo](slide_images/hcs_mid_32x.png)]
 
 ---
 

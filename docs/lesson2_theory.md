@@ -15,7 +15,7 @@ layout: true
 .bottom-bar[
 {{title}} -- {{subtitle}} -- {{organisation}}
 ]
-.logo[![logo](hcs_mid_32x.png)]
+.logo[![logo](slide_images/hcs_mid_32x.png)]
 
 ---
 
@@ -68,13 +68,13 @@ Note:
 
 class: full
 
-.center[.fitHeight[![](request-methods-1.png)]]
+.center[.fitHeight[![](slide_images/request-methods-1.png)]]
 
 ---
 
 class: full
 
-.center[.fitHeight[![](request-methods-2.png)]]
+.center[.fitHeight[![](slide_images/request-methods-2.png)]]
 
 ---
 
