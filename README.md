@@ -4,15 +4,18 @@
 
 ### ✏️ Homework
 
-- Extend the CRUD example to become an editor
-  - Add a textarea element
-  - If you click on a filename -> Read operation (open textarea)
-  - If you click on a save button -> Update operation
-  - If you click on a trash symbol -> Delete operation
-  - You need `fs.writeFile()` method to write / update the content of the file
-  - Addon:
-    - Give the file a name, when it is created (e.g. via `prompt`)
-    - Add some CSS to make it look nicer (if you want to do your own research, look into `bootstrap`)
+- Make sure MySQL is running - example code from lesson 5 is running
+
+For this and next lesson:
+
+- Write a ToDo App!
+  - A list of items, what you have to do
+  - You can create an item
+  - you can cross them off of your list (delete item again)
+  - Do only HTML-part and simple server
+  - On the server: store data in an array list `let todoList = []`
+  - advanced:
+    - make a strike through animation before let item vanish
 
 ### 📄 Docs
 
