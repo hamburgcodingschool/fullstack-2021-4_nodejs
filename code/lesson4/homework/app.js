@@ -84,7 +84,7 @@ returnFileList = (res) => {
 };
 
 ///////////////////////////////////////////////////
-// Methods to handle files
+// Methods to handle file content
 app.get("/filecontent", (req, res) => {
   // get the file name to read and create a proper path for it
   const filename = path.join(__dirname, DATA_DIRECTORY, req.query.filename);
