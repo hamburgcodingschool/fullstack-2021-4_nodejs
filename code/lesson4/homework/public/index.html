@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="description" content="Hamburg Coding School Homework – Simple editor." />
+		<meta name="author" content="Tobias Schulz-Hess" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Editor</title>
+        <link rel="stylesheet" href="/style.css" />
+    </head>
+    <body>
+        <h1>Editor</h1>
+
+        <div id="editArea" style="display:none">
+            <textarea id="editor" rows="5" cols="80"></textarea>
+            <br/>
+            <button id="saveText">Save</button>
+            <button id="deleteText">Delete</button>
+        </div>
+
+        <h2>List of files</h2>
+        <ul id="listOfFiles"></ul>
+        <button id="create">Create a new file</button>
+
+        <script>
+            // define elements for easier access
+            const listOfFiles = document.getElementById("listOfFiles");
+            const createButton = document.getElementById("create");
+            const editor = document.getElementById("editor");
+            const editArea = document.getElementById("editArea");
+            const saveTextButton = document.getElementById("saveText");
+            const deleteTextButton = document.getElementById("deleteText");
+            let filenameToEdit = "";
+
+            // react on the create button
+            createButton.addEventListener("click", async () => {
+                // the file name of the new file we want to create
+                const dataToSend = { newFile: "NewFile"};
+                // make a POST request to the server to create the file (C of CRUD)
+                const result = await fetch(`/file`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(dataToSend)
+                });
+                // get the answer of the server as JSON - this should contain a file list as well
+                const data = await result.json();
+                // and display the result
+                displayFiles(data);
+            });
+
+            // initial loading of the data
+            async function loadData() {
+                // make a get request and get the file list
+                const result =  await fetch("/file");
+                // convert it to json
+                const data = await result.json();
+                // and display it
+                displayFiles(data);
+            }
+            // Display the file list in the li tag
+            // data: the data, which is returned from the server and should contain a `files` array
+            function displayFiles(data) {
+                if (!data.ok) {
+                    alert(data.err);
+                } else {
+                    // Here we actually should do a check, if the data returned is valid
+                    // in our case: check if (data.ok) . If not, we should return a proper error message
+                    // but now we assume everything is ok
+                    // make the list of files empty, so that we don't get any duplicates
+                    listOfFiles.innerHTML = "";
+                    // go over the list of files
+                    for(let i = 0; i < data.files.length; i++) {
+                        const file = data.files[i];
+                        // create a new li dom node with the filename as content
+                        const li = document.createElement("li");
+                        // put text in a span document to add some buttons to it as well
+                        const span = document.createElement("span");
+                        span.innerHTML = file;
+                        // create button to edit a file
+                        const editButton = document.createElement("button");
+                        editButton.innerHTML = "edit";
+                        // add a click handler to delete the file
+                        editButton.onclick = function() { 
+                            loadFile(file);
+                        }
+                        // create button to rename a file
+                        const renameButton = document.createElement("button");
+                        renameButton.innerHTML = "rename";
+                        // add a click handler to delete the file
+                        renameButton.onclick = function() { 
+                            let newFile = prompt("Enter new filename", file);
+                            if (newFile !== null && newFile !== '') {
+                                renameFile(file, newFile); 
+                            }
+                        }
+                        // button to delete a file
+                        const deleteButton = document.createElement("button");
+                        deleteButton.innerHTML = "delete";
+                        // add a click handler to delete the file
+                        deleteButton.onclick = function() { 
+                            deleteFile(file); 
+                        }
+
+                        // add text and button to the li element
+                        li.append(span);
+                        li.append(editButton);
+                        li.append(renameButton);
+                        li.append(deleteButton);
+
+                        // and add it to the list of files
+                        listOfFiles.append(li);
+                    }
+                }
+            }
+
+            // Rename a file
+            // file: the name of the file we want to rename
+            // newFile: the new file name
+            async function renameFile(file, newFile) {
+                // the file name we want to rename plus the new file name - put into a json, so that we can send it to the server
+                const dataToSend = { fileToRename: file, newFileName: newFile};
+                // make a PUT request to the server to rename the file (U of CRUD)
+                const result = await fetch(`/file`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(dataToSend)
+                });
+                // get the answer of the server as JSON - this should contain a file list as well
+                const data = await result.json();
+                // and display the result
+                displayFiles(data);
+            }
+
+            // Delete a file
+            // file: the name of the file we want to delete
+            async function deleteFile(file) {
+                // the file name we want to delete - put into a json, so that we can send it to the server
+                const dataToSend = { fileToDelete: file};
+                // make a DELETE request to the server to delete the file (D of CRUD)
+                const result = await fetch(`/file`, {
+                    method: "DELETE",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(dataToSend)
+                });
+                // get the answer of the server as JSON - this should contain a file list as well
+                const data = await result.json();
+                // and display the result
+                displayFiles(data);
+            }
+
+            async function loadFile(file) {
+                // make a GET request to the server to delete the file (R of CRUD)
+                // since we do a get request, we need a different way to construct the query
+                const result = await fetch(`/filecontent?filename=${file}`);
+                // get the answer of the server as JSON - this should contain a file list as well
+                const data = await result.json();
+
+                editor.value = data.content;
+                editArea.style.display = "block";
+                filenameToEdit = file;
+            }
+
+            // react on the save text button
+            saveTextButton.addEventListener("click", async () => {
+                // the file name of the new file we want to create
+                const dataToSend = { filename: filenameToEdit, content: editor.value};
+                // make a PUT request to the server to create the file (U of CRUD)
+                const result = await fetch(`/filecontent`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(dataToSend)
+                });
+                // get the answer of the server as JSON - this should contain a file list as well
+                const data = await result.json();
+                // and check for errors
+                if (!data.ok) {
+                    alert(data.err);
+                } else {
+                    editArea.style.display = "none";
+                }
+            });
+
+            // react on the save text button
+            deleteTextButton.addEventListener("click", async () => {
+                // the file name of the file, where we want to delete the content
+                const dataToSend = { filename: filenameToEdit };
+                // make a DELETE request to the server to create the file (D of CRUD)
+                const result = await fetch(`/filecontent`, {
+                    method: "DELETE",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(dataToSend)
+                });
+                // get the answer of the server as JSON - this should contain a file list as well
+                const data = await result.json();
+                // and check for errors
+                if (!data.ok) {
+                    alert(data.err);
+                } else {
+                    editArea.style.display = "none";
+                }
+            });
+
+            // load data when initializing the page - this method is called after everything else
+            // is loaded
+            loadData();
+        </script>
+    </body>
+</html>
