@@ -6,13 +6,15 @@
     <body>
 
         <script>
-            const data = prompt("data to enter");
+            const data = prompt("data to enter"); // ask user to insert data
             const dataToSend = { content: data } // content is the column name in our table!
+            // post data to our server
             fetch("/database", {
                 method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(dataToSend)
                 })
+                // use .then() because we are not in a function an therefore cannot use async / await
                 .then((res) => res.json())
                 .then((res) => console.log(res));
         </script>
