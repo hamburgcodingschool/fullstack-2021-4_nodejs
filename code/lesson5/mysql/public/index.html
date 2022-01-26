@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MySQL</title>
+    </head>
+    <body>
+
+        <script>
+            const data = prompt("data to enter");
+            const dataToSend = { content: data } // content is the column name in our table!
+            fetch("/database", {
+                method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(dataToSend)
+                })
+                .then((res) => res.json())
+                .then((res) => console.log(res));
+        </script>
+    </body>
+</html>
