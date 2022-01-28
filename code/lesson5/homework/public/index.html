@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="description" content="Hamburg Coding School Homework – ToDo List." />
+		<meta name="author" content="Tobias Schulz-Hess" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ToDo-List</title>
+        <link rel="stylesheet" href="/style.css" />
+    </head>
+    <body>
+        <h1>ToDos</h1>
+
+        <ul id="list">
+
+        </ul>
+        <button id="add">Add new ToDo</button>
+
+        <script>
+            const listElement = document.getElementById("list");
+            const addButton = document.getElementById("add");
+
+            loadList = async () => {
+                const result = await fetch("/list");
+                const data = await result.json();
+                displayList(data);
+            }
+
+            addButton.addEventListener("click", async () => {
+                const newToDo = prompt("Enter new todo:");
+                if (newToDo !== "") {
+                    const dataToSend = {todo : newToDo};
+                    const result = await fetch("/list", {
+                        method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(dataToSend)
+                        });
+                    const data = await result.json();
+                    displayList(data);
+                }
+            });
+
+            displayList = (data) => {
+                list.innerHTML = '';
+                for(let i = 0; i < data.todos.length; i++) {
+                    const listItem = document.createElement("li");
+                    const spanElement = document.createElement("span");
+                    spanElement.dataId = i;
+                    spanElement.innerHTML = data.todos[i];
+                    spanElement.addEventListener("click", (event) => {
+                        event.srcElement.className += " strike";
+                        const dataToSend = {index : event.srcElement.dataId};
+                        setTimeout(() => {
+                            fetch("/list", {
+                                method: "DELETE",
+                                    headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify(dataToSend)
+                                }).then((res) => res.json()).then((data) => displayList(data));
+                        }, 3000);
+                    });
+                    const buttonElement = document.createElement("button");
+                    buttonElement.innerHTML = "✎";
+                    buttonElement.dataId = i;
+                    buttonElement.addEventListener("click", (event) => {
+                        const newText = prompt("Edit ToDo text", data.todos[i]);
+                        if (newText !== "") {
+                            const dataToSend = {index: event.srcElement.dataId, todo: newText};
+                            fetch("/list", {
+                                method: "PUT",
+                                    headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify(dataToSend)
+                                }).then((res) => res.json()).then((data) => displayList(data));
+                        }
+                    });
+                    listItem.append(spanElement);
+                    listItem.append(buttonElement);
+                    listElement.append(listItem);
+                }
+            }
+
+            loadList();
+        </script>
+    </body>
+</html>
