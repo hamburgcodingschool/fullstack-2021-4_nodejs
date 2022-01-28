@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Fetch</title>
+    </head>
+    <body>
+        <script>
+
+// makes a request to server to the URL http://localhost:3000/getSomething as a GET request            
+fetch("/getSomething")
+
+// we can also add variables to the URL
+fetch(`/getSomethingElse/${id}`)
+
+// get does not support sending bodies!!!
+// so: whatever kind of information we send: we need to send it as path or as query parameter
+// sending it with the path: 
+fetch(`/getSomethingElse/${text}`) // does not wiork for a text like "bla/foo" or "bla foo" (space!)
+// sending it via query parameter:
+fetch(`/getSomethingElse?data=${text}`) // text would be URL encoded and end up like "bla%20foo" 
+
+// fetch has a big number of parameters - see https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+// for us right now only 3 are interesting: METHOD, CONTENT-TYPE, BODY
+// body used to send data to the server
+// method to indicate, which method (CRUD)
+// content-type to indicate we are dealing with json data
+fetch("/database", {
+    method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dataToSend)
+    })
+// Using POST, DELETE or PUT is only convention!!!
+// Another principle would be to only use post but differentiate what needs to be done via the URL
+
+// We only use json, because it works nicely with javascript 
+// like JSON parse creates an object, which we then can access with data.foo
+// instead we could use anything else (xml, plain text, yaml, ...)
+// Because we can do anything, we need to tell the server, what kind of dat we are sending
+// This is the content type
+
+
+
+        </script>
+    </body>
+</html>
