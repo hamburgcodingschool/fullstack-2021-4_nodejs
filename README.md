@@ -12,10 +12,11 @@ For this and next lesson:
   - A list of items, what you have to do
   - You can create an item
   - you can cross them off of your list (delete item again)
-  - Do only HTML-part and simple server
-  - On the server: store data in an array list `let todoList = []`
+  - Store the data in a database (MySQL)
+  - if you have not enough time: start with the homework example of lesson 5
   - advanced:
     - make a strike through animation before let item vanish
+    - add categories (or tags) to the to do list
 
 ### 📄 Docs
 
