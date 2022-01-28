@@ -19,6 +19,16 @@ const app = express();
 app.use(express.static(path.join(__dirname, "public"))); // serve static content from public directory
 app.use(express.json()); // !important to parse json POST requests
 
+app.get("/database/:id", (req, res) => {
+  console.log(req.params.id);
+  pool.query(
+    "SELECT * FROM mytable WHERE id=?",
+    req.params.id,
+    (error, results, fields) => {
+      res.send(results[0]);
+    }
+  );
+});
 // get all data from the database
 // get method
 app.get("/database", (req, res) => {

@@ -4,11 +4,12 @@
         <title>MySQL</title>
     </head>
     <body>
-        <ul id="list"></ul>
+        <ul id="list" data-id="123" data-foo="bar"></ul>
 
         <button id="add">add</button>
         <script>
-            /* const addButton = document.getElementById("add");
+            const listElement = document.getElementById("list");
+            const addButton = document.getElementById("add");
 
             // post data to our server
             addButton.addEventListener("click", () => {
@@ -21,13 +22,28 @@
                     })
                     // use .then() because we are not in a function an therefore cannot use async / await
                     .then((res) => res.json())
-                    .then((res) => console.log(res));
-            }); */
-            
+                    .then((res) => location.reload());
+            }); 
+
             fetch("/database")
                 // use .then() because we are not in a function an therefore cannot use async / await
                 .then((res) => res.json())
-                .then((res) => console.log(res));
+                .then((res) => {
+                    for (let i=0; i < res.result.length; i++) {
+                        const listItems = document.createElement("li");
+                        listItems.dataId = res.result[i].id; // adding here the tag data-id to the li element to store the id of the database object
+                        listItems.innerHTML = "HIDDEN";
+                        listItems.addEventListener("click", async (event) => {
+                            console.log(event);
+                            // show the item
+                            const result = await fetch(`/database/${event.srcElement.dataId}`); // reading the data-id tag from the li element again
+                            const data = await result.json();
+                            // use resonse and overwrite inner html
+                            event.srcElement.innerHTML = data.content; // "content", because the database column is named "content"
+                        });
+                        listElement.append(listItems);
+                    }
+                });
         </script>
     </body>
 </html>
