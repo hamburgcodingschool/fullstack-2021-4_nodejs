@@ -8,15 +8,20 @@
 
 For this and next lesson:
 
-- Write a ToDo App!
-  - A list of items, what you have to do
-  - You can create an item
-  - you can cross them off of your list (delete item again)
-  - Store the data in a database (MySQL)
-  - if you have not enough time: start with the homework example of lesson 5
-  - advanced:
-    - make a strike through animation before let item vanish
-    - add categories (or tags) to the to do list
+- Write an URL shortener convert a long url to a short one
+  - Example: bit.ly/short
+  - We have 2 parts: admin interface / actual usage
+  - Admin interface:
+    - enter an URL and the short_name
+    - modify and delete it
+  - Usage part:
+    - if user enters the short_name, they are redirected
+    - use the : in the path statement `app.get('/:shortened')...`
+    - redirect using http status code 301 and `res.redirect(url)`
+  - Database is up to you (Array list is also fine)
+  - Advanced part:
+    - do some error checking, that short_name does not contain ` ` or `/`
+    - hide the admin part behind authentication
 
 ### 📄 Docs
 
