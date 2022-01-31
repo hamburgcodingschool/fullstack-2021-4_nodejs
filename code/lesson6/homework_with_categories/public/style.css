@@ -1,0 +1,33 @@
+ul#list {
+  list-style-type: circle;
+}
+
+li button {
+  margin-left: 10px;
+}
+
+@keyframes strike {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+.strike {
+  position: relative;
+}
+.strike::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: red;
+  animation-name: strike;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
