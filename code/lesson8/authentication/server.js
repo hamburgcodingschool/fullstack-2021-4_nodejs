@@ -12,7 +12,10 @@ const express = require("express");
 const PORT = 3000;
 const app = express();
 
-app.get("/admin", (req, res) => {
+// create our own middleware to secure the /admin path
+// more on middlewares: https://expressjs.com/de/guide/using-middleware.html
+app.use("/admin" /* path is optional */, (req, res, next) => {
+  // === CHANGED
   // if the user has entered username and password, it is in here
   const header = req.headers.authorization;
   let is_user_authenticated;
@@ -52,7 +55,7 @@ app.get("/admin", (req, res) => {
   }
 
   if (is_user_authenticated) {
-    res.send("Very secret admin content");
+    next(); // <=== CHANGED
   } else {
     // tell the browser, that some authentication is reuqired
     // AND tell, what kind of authentication is expected
@@ -60,6 +63,13 @@ app.get("/admin", (req, res) => {
     res.status(401).send("Authentication required.");
     // send() always needs to be the last command
   }
+});
+
+app.get("/admin", (req, res) => {
+  res.send("Very secret admin content");
+});
+app.get("/admin/other", (req, res) => {
+  res.send("Another secret admin content");
 });
 
 app.get("/about", (req, res) => {
