@@ -36,24 +36,32 @@
 
 ## Session 5
 
-- Database connection
+- Database connection: MySQL
 - Implementing CRUD server with database storage
 - Theory: organizing files
 - Homework: ToDo-List app
 
 ## Session 6
 
+- Continue database connection: MySQL
+- Parameter as path statements
+- Recap of `fetch()`
+
+# Session 7
+
+- Database connection: MongoDB
 - [Http headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers)
 - HttpAuth
-- Caching basics
-
-## Session 7
-
-- Recap
-- Brief intro to SSR and discussion API vs. SSR
-- Streams
-- Socket.io - creating a chat app
 
 ## Session 8
 
-- Creating a Slack Bot using Express
+- Recap
+- Brief intro to SSR and discussion API vs. SSR
+- HttpAuth
+
+## Optional
+
+- Caching basics
+- Streams
+- Socket.io - creating a chat app
+- Using Express as a Slack client
